@@ -679,3 +679,115 @@ section h2 {
         display: none;
     }
 }
+
+/* Exclusive Page Styles */
+.exclusive-hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: radial-gradient(ellipse at center, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+    padding: 6rem 0 2rem;
+}
+
+.exclusive-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.exclusive-header {
+    margin-bottom: 3rem;
+}
+
+.exclusive-title {
+    font-family: var(--font-mono);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 700;
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+}
+
+.exclusive-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    margin-bottom: 0;
+}
+
+.exclusive-track {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-bottom: 3rem;
+}
+
+.track-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-family: var(--font-mono);
+}
+
+.track-description {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
+.soundcloud-player {
+    margin-bottom: 2rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.soundcloud-player iframe {
+    border-radius: 0.5rem;
+}
+
+.exclusive-message {
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-top: 2rem;
+}
+
+.exclusive-message p {
+    color: var(--text-secondary);
+    margin: 0;
+    font-style: italic;
+}
+
+.exclusive-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .exclusive-hero {
+        padding: 4rem 0 2rem;
+    }
+    
+    .exclusive-track {
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .exclusive-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .exclusive-actions .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+}

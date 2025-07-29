@@ -229,6 +229,10 @@
             if (user) {
                 showSignedIn(user);
                 console.log('User is signed in:', user.displayName);
+                // Redirect to exclusive content after successful sign in
+                setTimeout(() => {
+                    window.location.href = 'exclusive.html';
+                }, 1000);
             } else {
                 showSignedOut();
                 console.log('User is signed out');

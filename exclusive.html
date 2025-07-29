@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exclusive Content - TV IN BED</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-logo">
+                <h1>TV IN BED</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#music">Music</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="auth-section">
+                <div id="auth-loading" class="auth-loading" style="display: none;">
+                    <span>Loading...</span>
+                </div>
+                <div id="signed-out-state" class="auth-state" style="display: none;">
+                    <button id="google-signin-btn" class="auth-btn">
+                        <span>Sign in with Google</span>
+                    </button>
+                </div>
+                <div id="signed-in-state" class="auth-state">
+                    <div class="user-info">
+                        <img id="user-avatar" src="" alt="User Avatar" class="user-avatar">
+                        <span id="user-name"></span>
+                    </div>
+                    <button id="signout-btn" class="auth-btn signout-btn">Sign Out</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="exclusive-hero">
+            <div class="container">
+                <div class="exclusive-content">
+                    <div class="exclusive-header">
+                        <h1 class="exclusive-title">Exclusive Content</h1>
+                        <p class="exclusive-subtitle">Thank you for signing in! Here's something special just for you.</p>
+                    </div>
+                    
+                    <div class="exclusive-track">
+                        <h2 class="track-title">Dreamstar</h2>
+                        <p class="track-description">An exclusive unreleased track from TV IN BED</p>
+                        
+                        <div class="soundcloud-player">
+                            <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" 
+                                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1916925226/secret-token/s-h3tltqTp3wl&color=%236366f1&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
+                            </iframe>
+                        </div>
+                        
+                        <div class="exclusive-message">
+                            <p>This track is only available to signed-in users. Thank you for being part of the TV IN BED community!</p>
+                        </div>
+                    </div>
+                    
+                    <div class="exclusive-actions">
+                        <a href="https://linktr.ee/tvinbed" class="btn btn-primary" target="_blank">Follow for More</a>
+                        <a href="index.html" class="btn btn-secondary">Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 TV IN BED. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script type="module" src="auth.js"></script>
+    <script type="module">
+        import { onAuthStateChange, signInWithGoogle, signOutUser, handleRedirectResult } from './auth.js';
+        
+        // DOM elements
+        const googleSignInBtn = document.getElementById('google-signin-btn');
+        const signOutBtn = document.getElementById('signout-btn');
+        const signedOutState = document.getElementById('signed-out-state');
+        const signedInState = document.getElementById('signed-in-state');
+        const authLoading = document.getElementById('auth-loading');
+        const userAvatar = document.getElementById('user-avatar');
+        const userName = document.getElementById('user-name');
+        
+        // Redirect to home if not authenticated
+        const checkAuth = (user) => {
+            if (!user) {
+                // Redirect to home page if not signed in
+                window.location.href = 'index.html';
+            } else {
+                // Show user info
+                signedInState.style.display = 'flex';
+                signedOutState.style.display = 'none';
+                authLoading.style.display = 'none';
+                userAvatar.src = user.photoURL || '';
+                userName.textContent = user.displayName || user.email;
+            }
+        };
+        
+        // Show loading initially
+        authLoading.style.display = 'block';
+        signedInState.style.display = 'none';
+        signedOutState.style.display = 'none';
+        
+        // Handle redirect result on page load
+        handleRedirectResult().catch(console.error);
+        
+        // Listen for auth state changes
+        onAuthStateChange((user) => {
+            checkAuth(user);
+        });
+        
+        // Sign Out event
+        if (signOutBtn) {
+            signOutBtn.addEventListener('click', async () => {
+                try {
+                    await signOutUser();
+                    window.location.href = 'index.html';
+                } catch (error) {
+                    console.error('Sign out failed:', error);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
