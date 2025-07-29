@@ -365,6 +365,22 @@ section h2 {
     line-height: 1.7;
 }
 
+.bandcamp-player {
+    margin-bottom: 2rem;
+}
+
+.bandcamp-player h4 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.bandcamp-player iframe {
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
 .tracklist h4 {
     font-size: 1.25rem;
     margin-bottom: 1rem;
