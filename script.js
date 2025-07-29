@@ -4,6 +4,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const heroVisual = document.querySelector('.hero-visual');
     const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
     const navLinksContainer = document.querySelector('.nav-links');
+    const exclusiveNavItem = document.getElementById('exclusive-nav-item');
+    
+    // We'll rely on the auth state change handler in the HTML file
+    // for showing/hiding the exclusive tab
     
     window.addEventListener('scroll', function() {
         if (window.scrollY > 100) {
