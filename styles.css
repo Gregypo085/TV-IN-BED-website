@@ -86,6 +86,11 @@ body {
     color: var(--text-primary);
 }
 
+.nav-links li.active a {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
 .auth-section {
     display: flex;
     align-items: center;

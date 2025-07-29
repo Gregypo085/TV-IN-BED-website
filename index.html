@@ -18,6 +18,7 @@
                 <li><a href="#music">Music</a></li>
                 <li><a href="#listen">Listen</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li id="exclusive-nav-item" style="display: none;"><a href="exclusive.html">Exclusive</a></li>
             </ul>
             <div class="auth-section">
                 <div id="auth-loading" class="auth-loading" style="display: none;">
@@ -229,13 +230,13 @@
             if (user) {
                 showSignedIn(user);
                 console.log('User is signed in:', user.displayName);
-                // Redirect to exclusive content after successful sign in
-                setTimeout(() => {
-                    window.location.href = 'exclusive.html';
-                }, 1000);
+                // Show the exclusive nav item for logged-in users
+                document.getElementById('exclusive-nav-item').style.display = 'block';
             } else {
                 showSignedOut();
                 console.log('User is signed out');
+                // Hide the exclusive nav item for logged-out users
+                document.getElementById('exclusive-nav-item').style.display = 'none';
             }
         });
     </script>
