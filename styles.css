@@ -156,18 +156,78 @@ body {
 }
 
 @media (max-width: 768px) {
+    .header {
+        padding: 0.25rem 0;
+    }
+    
     .nav {
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        justify-content: center;
+    }
+    
+    .nav-logo {
+        flex: 0 0 100%;
+        text-align: center;
+        margin-bottom: 0.25rem;
+    }
+    
+    .nav-logo h1 {
+        font-size: 1rem;
+    }
+    
+    .nav-links {
+        flex: 1;
+        justify-content: center;
+        gap: 0.75rem;
+        font-size: 0.85rem;
+        margin: 0;
+        padding: 0;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Firefox */
+    }
+    
+    .nav-links::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Edge */
     }
     
     .auth-section {
-        order: -1;
+        flex: 0 0 100%;
+        justify-content: center;
+        margin-top: 0.25rem;
     }
     
     .user-info span {
         display: none;
+    }
+    
+    .auth-btn {
+        padding: 0.25rem 0.75rem;
+        font-size: 0.75rem;
+    }
+    
+    /* Adjust section spacing for mobile */
+    section {
+        padding: 3rem 0;
+    }
+    
+    section:first-of-type {
+        padding-top: 6rem; /* Extra padding for first section to account for header */
+    }
+    
+    /* Adjust hero content for mobile */
+    .hero-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding-top: 3rem;
+    }
+    
+    /* Make sure main content has proper spacing */
+    main {
+        padding-top: 3rem;
     }
 }
 
@@ -178,6 +238,7 @@ body {
     background: radial-gradient(ellipse at center, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
     position: relative;
     overflow: hidden;
+    padding-top: 80px; /* Add padding to account for fixed header */
 }
 
 .hero::before {
