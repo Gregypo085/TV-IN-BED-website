@@ -19,6 +19,23 @@
                 <li><a href="#listen">Listen</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <div class="auth-section">
+                <div id="auth-loading" class="auth-loading" style="display: none;">
+                    <span>Loading...</span>
+                </div>
+                <div id="signed-out-state" class="auth-state">
+                    <button id="google-signin-btn" class="auth-btn">
+                        <span>Sign in with Google</span>
+                    </button>
+                </div>
+                <div id="signed-in-state" class="auth-state" style="display: none;">
+                    <div class="user-info">
+                        <img id="user-avatar" src="" alt="User Avatar" class="user-avatar">
+                        <span id="user-name"></span>
+                    </div>
+                    <button id="signout-btn" class="auth-btn signout-btn">Sign Out</button>
+                </div>
+            </div>
         </nav>
     </header>
 
@@ -147,5 +164,73 @@
     </footer>
 
     <script src="script.js"></script>
+    <script type="module" src="auth.js"></script>
+    <script type="module">
+        import { signInWithGoogle, signOutUser, onAuthStateChange } from './auth.js';
+        
+        // DOM elements
+        const googleSignInBtn = document.getElementById('google-signin-btn');
+        const signOutBtn = document.getElementById('signout-btn');
+        const signedOutState = document.getElementById('signed-out-state');
+        const signedInState = document.getElementById('signed-in-state');
+        const authLoading = document.getElementById('auth-loading');
+        const userAvatar = document.getElementById('user-avatar');
+        const userName = document.getElementById('user-name');
+        
+        // Show loading state
+        const showLoading = () => {
+            authLoading.style.display = 'block';
+            signedOutState.style.display = 'none';
+            signedInState.style.display = 'none';
+        };
+        
+        // Show signed out state
+        const showSignedOut = () => {
+            authLoading.style.display = 'none';
+            signedOutState.style.display = 'block';
+            signedInState.style.display = 'none';
+        };
+        
+        // Show signed in state
+        const showSignedIn = (user) => {
+            authLoading.style.display = 'none';
+            signedOutState.style.display = 'none';
+            signedInState.style.display = 'flex';
+            userAvatar.src = user.photoURL || '';
+            userName.textContent = user.displayName || user.email;
+        };
+        
+        // Google Sign In event
+        googleSignInBtn.addEventListener('click', async () => {
+            showLoading();
+            try {
+                await signInWithGoogle();
+            } catch (error) {
+                console.error('Sign in failed:', error);
+                showSignedOut();
+            }
+        });
+        
+        // Sign Out event
+        signOutBtn.addEventListener('click', async () => {
+            showLoading();
+            try {
+                await signOutUser();
+            } catch (error) {
+                console.error('Sign out failed:', error);
+            }
+        });
+        
+        // Listen for auth state changes
+        onAuthStateChange((user) => {
+            if (user) {
+                showSignedIn(user);
+                console.log('User is signed in:', user.displayName);
+            } else {
+                showSignedOut();
+                console.log('User is signed out');
+            }
+        });
+    </script>
 </body>
 </html>
