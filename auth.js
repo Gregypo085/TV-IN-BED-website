@@ -5,7 +5,8 @@ import {
     signInWithPopup, 
     GoogleAuthProvider, 
     signOut, 
-    onAuthStateChanged 
+    onAuthStateChanged,
+    getRedirectResult
 } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
 
 // Firebase configuration
@@ -27,13 +28,21 @@ const provider = new GoogleAuthProvider();
 // Sign in with Google
 export const signInWithGoogle = async () => {
     try {
+        // Try popup first
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
         console.log('User signed in:', user.displayName);
         return user;
     } catch (error) {
-        console.error('Error signing in:', error);
-        throw error;
+        // If popup fails, try redirect (fallback for mobile/popup blockers)
+        if (error.code === 'auth/popup-blocked' || error.code === 'auth/popup-closed-by-user') {
+            console.log('Popup blocked, trying redirect method...');
+            const { signInWithRedirect } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js');
+            await signInWithRedirect(auth, provider);
+        } else {
+            console.error('Error signing in:', error);
+            throw error;
+        }
     }
 };
 
@@ -56,4 +65,19 @@ export const onAuthStateChange = (callback) => {
 // Get current user
 export const getCurrentUser = () => {
     return auth.currentUser;
+};
+
+// Handle redirect result (for when popup is blocked)
+export const handleRedirectResult = async () => {
+    try {
+        const result = await getRedirectResult(auth);
+        if (result) {
+            const user = result.user;
+            console.log('User signed in via redirect:', user.displayName);
+            return user;
+        }
+    } catch (error) {
+        console.error('Error handling redirect result:', error);
+        throw error;
+    }
 };

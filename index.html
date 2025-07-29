@@ -166,7 +166,7 @@
     <script src="script.js"></script>
     <script type="module" src="auth.js"></script>
     <script type="module">
-        import { signInWithGoogle, signOutUser, onAuthStateChange } from './auth.js';
+        import { signInWithGoogle, signOutUser, onAuthStateChange, handleRedirectResult } from './auth.js';
         
         // DOM elements
         const googleSignInBtn = document.getElementById('google-signin-btn');
@@ -220,6 +220,9 @@
                 console.error('Sign out failed:', error);
             }
         });
+        
+        // Handle redirect result on page load
+        handleRedirectResult().catch(console.error);
         
         // Listen for auth state changes
         onAuthStateChange((user) => {
