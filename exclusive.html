@@ -95,18 +95,30 @@
         const userAvatar = document.getElementById('user-avatar');
         const userName = document.getElementById('user-name');
         
-        // Redirect to home if not authenticated
+        // Check authentication status
         const checkAuth = (user) => {
             if (!user) {
-                // Redirect to home page if not signed in
-                window.location.href = 'index.html';
-            } else {
+                // Only redirect if this is the initial page load, not navigation
+                if (document.referrer === '' || !document.referrer.includes('tv-in-bed-website')) {
+                    // Redirect to home page if not signed in and coming from outside the site
+                    window.location.href = 'index.html';
+                    return;
+                }
+            }
+            
+            // Update UI based on auth state
+            if (user) {
                 // Show user info
                 signedInState.style.display = 'flex';
                 signedOutState.style.display = 'none';
                 authLoading.style.display = 'none';
                 userAvatar.src = user.photoURL || '';
                 userName.textContent = user.displayName || user.email;
+            } else {
+                // Show signed out state
+                signedInState.style.display = 'none';
+                signedOutState.style.display = 'flex';
+                authLoading.style.display = 'none';
             }
         };
         
