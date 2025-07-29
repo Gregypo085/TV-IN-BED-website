@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const navbar = document.querySelector('.header');
     const navLinks = document.querySelectorAll('.nav-links a');
     const heroVisual = document.querySelector('.hero-visual');
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const navLinksContainer = document.querySelector('.nav-links');
     
     window.addEventListener('scroll', function() {
         if (window.scrollY > 100) {
@@ -10,6 +12,24 @@ document.addEventListener('DOMContentLoaded', function() {
             navbar.style.background = 'rgba(10, 10, 10, 0.95)';
         }
     });
+    
+    // Mobile menu toggle functionality
+    if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', function() {
+            mobileMenuToggle.classList.toggle('open');
+            navLinksContainer.classList.toggle('open');
+            document.body.classList.toggle('menu-open');
+        });
+        
+        // Close mobile menu when clicking on a link
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenuToggle.classList.remove('open');
+                navLinksContainer.classList.remove('open');
+                document.body.classList.remove('menu-open');
+            });
+        });
+    }
     
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
